@@ -63,6 +63,9 @@ func (ct *controllerImpl) UpdateAssetByID(c echo.Context) error {
 	}
 
 	response.Status = "success"
+
+	go ct.usecase.Notif.SendNotif(ctx, "update")
+
 	return c.JSON(http.StatusOK, response)
 }
 
@@ -90,6 +93,9 @@ func (ct *controllerImpl) CreateAsset(c echo.Context) error {
 	}
 
 	response.Status = "success"
+
+	go ct.usecase.Notif.SendNotif(ctx, "create")
+
 	return c.JSON(http.StatusCreated, response)
 }
 
@@ -112,5 +118,8 @@ func (ct *controllerImpl) DeleteAssetByID(c echo.Context) error {
 	}
 
 	response.Status = "success"
+
+	go ct.usecase.Notif.SendNotif(ctx, "remove")
+
 	return c.JSON(http.StatusCreated, response)
 }

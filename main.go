@@ -7,6 +7,7 @@ import (
 	"testjavan/controllers"
 	"testjavan/helpers"
 	"testjavan/helpers/constants"
+	"testjavan/helpers/validate"
 	"testjavan/pkg"
 	"testjavan/repositories"
 	"testjavan/tcp"
@@ -48,7 +49,7 @@ func main() {
 		return c.JSON(200, "OK")
 	})
 
-	e.Use(helpers.ValidateContentType())
+	e.Use(validate.ValidateContentType())
 
 	db, err := pkg.ConnectDB()
 	if err != nil {
@@ -56,6 +57,9 @@ func main() {
 	}
 
 	repo := repositories.NewRepository(db)
+
+	e.Use(validate.ValidateUserDeviceToken(repo))
+
 	usecase := usecase.NewUsecase(repo)
 	controllers.NewController(e, usecase)
 

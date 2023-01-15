@@ -14,7 +14,10 @@ Header
 
 ```
 {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Member-ID": "1",
+    "Device-Type": "desktop" (ex: desktop, android, ios)
+    "Device-Token": "token-123"
 }
 ```
 

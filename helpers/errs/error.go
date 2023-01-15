@@ -14,6 +14,8 @@ var (
 	ErrMissingParameter = errors.New("error: missing parameter")
 	ErrInvalidParameter = errors.New("error: invalid parameter")
 	ErrRecordNotfound   = errors.New("error: data not found")
+	ErrMissingDevice    = errors.New("error: Device-Type and Device-Token is mandatory")
+	ErrMissingMemberID  = errors.New("error: Member-ID is mandatory")
 )
 
 var ErrHttpStatusMap = map[string]int{
@@ -21,6 +23,8 @@ var ErrHttpStatusMap = map[string]int{
 	ErrContentType.Error():      http.StatusBadRequest,
 	ErrMissingParameter.Error(): http.StatusBadRequest,
 	ErrInvalidParameter.Error(): http.StatusBadRequest,
+	ErrMissingDevice.Error():    http.StatusBadRequest,
+	ErrMissingMemberID.Error():  http.StatusBadRequest,
 	ErrRecordNotfound.Error():   http.StatusNotFound,
 }
 

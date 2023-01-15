@@ -7,6 +7,7 @@ type Repository struct {
 	Asset       AssetRepository
 	Product     ProductRepository
 	FamilyAsset FamilyAssetRepository
+	Device      MemberDevice
 }
 
 // NewRepository: Init new repository
@@ -16,5 +17,6 @@ func NewRepository(db *gorm.DB) *Repository {
 		Asset:       newAssetRepository(db),
 		Product:     newProductRepository(),
 		FamilyAsset: newFamilyAsset(db),
+		Device:      newDeviceRepository(db),
 	}
 }

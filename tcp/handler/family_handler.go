@@ -63,6 +63,7 @@ func GetFamily(args string) (model.Return, error) {
 		SetHeaders(map[string]string{
 			helpers.RequestID: requestID,
 			"Content-Type":    "application/json",
+			"Skipper":         "tcp-skipper",
 		}).
 		SetResult(&result).
 		SetError(&result).

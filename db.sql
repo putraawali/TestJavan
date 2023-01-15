@@ -55,3 +55,12 @@ VALUES
 	((SELECT m.member_id FROM members m WHERE m.member_name = 'Diki'), (SELECT a.asset_id FROM assets a WHERE a.asset_name = 'Samsung Galaxy Book')),
 	((SELECT m.member_id FROM members m WHERE m.member_name = 'Sigit'), (SELECT a.asset_id FROM assets a WHERE a.asset_name = 'Huawei P30')),
 	((SELECT m.member_id FROM members m WHERE m.member_name = 'Doni'), (SELECT a.asset_id FROM assets a WHERE a.asset_name = 'iPhone X'));
+
+CREATE TABLE family_member_devices(
+	member_device_id SERIAL PRIMARY KEY,
+	member_id int8 NOT NULL,
+	device_type VARCHAR(50) NOT NULL,
+	device_token TEXT NOT NULL,
+	CONSTRAINT fk_member_id FOREIGN KEY (member_id) REFERENCES members(member_id),
+	CONSTRAINT family_member_devices_un UNIQUE (device_token, member_id)
+);

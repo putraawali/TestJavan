@@ -77,6 +77,8 @@ func (ct *controllerImpl) UpdateFamilyMemberByID(c echo.Context) error {
 
 	response.Status = "success"
 
+	go ct.usecase.Notif.SendNotif(ctx, "update")
+
 	return c.JSON(200, response)
 }
 
@@ -98,6 +100,8 @@ func (ct *controllerImpl) RemoveFamilyMemberByID(c echo.Context) error {
 	}
 
 	response.Status = "success"
+
+	go ct.usecase.Notif.SendNotif(ctx, "remove")
 
 	return c.JSON(200, response)
 }
@@ -121,6 +125,8 @@ func (ct *controllerImpl) CreateFamilyMember(c echo.Context) error {
 	}
 
 	response.Status = "success"
+
+	go ct.usecase.Notif.SendNotif(ctx, "create")
 
 	return c.JSON(http.StatusCreated, response)
 }
@@ -156,6 +162,8 @@ func (ct *controllerImpl) AddAssetToFamilyMember(c echo.Context) error {
 
 	response.Status = "success"
 
+	go ct.usecase.Notif.SendNotif(ctx, "create")
+
 	return c.JSON(http.StatusCreated, response)
 }
 
@@ -189,6 +197,8 @@ func (ct *controllerImpl) RemoveAssetFromFamilyMember(c echo.Context) error {
 	}
 
 	response.Status = "success"
+
+	go ct.usecase.Notif.SendNotif(ctx, "remove")
 
 	return c.JSON(http.StatusCreated, response)
 }
