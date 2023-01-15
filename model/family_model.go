@@ -9,8 +9,8 @@ type Family struct {
 	MemberName string     `gorm:"column:member_name" json:"member_name"`
 	Gender     string     `gorm:"column:gender" json:"gender"`
 	CreatedAt  time.Time  `gorm:"column:created_at" json:"created_at"`
-	UpdatedAt  *time.Time `gorm:"autoUpdateTime:mili;column:updated_at" json:"updated_at,omitempty"`
-	DeletedAt  *time.Time `gorm:"column:deleted_at" json:"deleted_at,omitempty"`
+	UpdatedAt  *time.Time `gorm:"column:updated_at" json:"updated_at"`
+	DeletedAt  *time.Time `gorm:"column:deleted_at" json:"deleted_at"`
 }
 
 type FamilyAssets struct {
@@ -18,8 +18,8 @@ type FamilyAssets struct {
 	MemberName string           `json:"member_name"`
 	Gender     string           `json:"gender"`
 	CreatedAt  time.Time        `json:"created_at"`
-	UpdatedAt  *time.Time       `json:"updated_at,omitempty"`
-	DeletedAt  *time.Time       `json:"deleted_at,omitempty"`
+	UpdatedAt  *time.Time       `json:"updated_at"`
+	DeletedAt  *time.Time       `json:"deleted_at"`
 	Assets     []AssetWithPrice `json:"assets"`
 }
 

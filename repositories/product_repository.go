@@ -29,7 +29,7 @@ func (p *product) GetAllProduct(ctx context.Context) (model.Products, error) {
 		requestID = ctx.Value(helpers.RequestIDKey).(string)
 	)
 
-	ctx, cancel := context.WithTimeout(ctx, time.Second*3)
+	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
 
 	client := resty.New()

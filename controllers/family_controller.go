@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"net/http"
 	"strconv"
 	"testjavan/helpers"
 	"testjavan/helpers/errs"
@@ -99,4 +100,95 @@ func (ct *controllerImpl) RemoveFamilyMemberByID(c echo.Context) error {
 	response.Status = "success"
 
 	return c.JSON(200, response)
+}
+
+func (ct *controllerImpl) CreateFamilyMember(c echo.Context) error {
+	var (
+		response = model.Return{}
+		ctx      = context.WithValue(context.Background(), helpers.RequestIDKey, c.Request().Header.Get(string(helpers.RequestIDKey)))
+		err      error
+	)
+
+	req := model.FamilyRequest{}
+	err = c.Bind(&req)
+	if err != nil {
+		return errs.Wrap(c, err)
+	}
+
+	err = ct.usecase.Family.CreateFamilyMember(ctx, req)
+	if err != nil {
+		errs.Wrap(c, err)
+	}
+
+	response.Status = "success"
+
+	return c.JSON(http.StatusCreated, response)
+}
+
+func (ct *controllerImpl) AddAssetToFamilyMember(c echo.Context) error {
+	var (
+		response = model.Return{}
+		ctx      = context.WithValue(context.Background(), helpers.RequestIDKey, c.Request().Header.Get(string(helpers.RequestIDKey)))
+		err      error
+	)
+
+	paramID := c.Param("id")
+	id, err := strconv.Atoi(paramID)
+	if err != nil {
+		return errs.Wrap(c, errs.ErrInvalidParameter)
+	}
+
+	req := model.AssetRequest{}
+	err = c.Bind(&req)
+	if err != nil {
+		return errs.Wrap(c, err)
+	}
+
+	if req.AssetName == "" {
+		err = errs.ErrInvalidParameter
+		return errs.Wrap(c, err)
+	}
+
+	err = ct.usecase.Asset.AddAssetToFamilyMember(ctx, id, req.AssetName)
+	if err != nil {
+		return errs.Wrap(c, err)
+	}
+
+	response.Status = "success"
+
+	return c.JSON(http.StatusCreated, response)
+}
+
+func (ct *controllerImpl) RemoveAssetFromFamilyMember(c echo.Context) error {
+	var (
+		response = model.Return{}
+		ctx      = context.WithValue(context.Background(), helpers.RequestIDKey, c.Request().Header.Get(string(helpers.RequestIDKey)))
+		err      error
+	)
+
+	paramID := c.Param("id")
+	id, err := strconv.Atoi(paramID)
+	if err != nil {
+		return errs.Wrap(c, errs.ErrInvalidParameter)
+	}
+
+	req := model.AssetRequest{}
+	err = c.Bind(&req)
+	if err != nil {
+		return errs.Wrap(c, err)
+	}
+
+	if req.AssetID == 0 {
+		err = errs.ErrInvalidParameter
+		return errs.Wrap(c, err)
+	}
+
+	err = ct.usecase.Asset.RemoveAssetFromFamilyMember(ctx, id, req.AssetID)
+	if err != nil {
+		return errs.Wrap(c, err)
+	}
+
+	response.Status = "success"
+
+	return c.JSON(http.StatusCreated, response)
 }

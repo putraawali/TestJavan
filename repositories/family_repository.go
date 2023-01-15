@@ -14,6 +14,7 @@ type FamilyRepository interface {
 	GetFamilyMemberByID(ctx context.Context, id int) (model.Family, error)
 	UpdateFamilyMemberByID(ctx context.Context, data model.Family) error
 	RemoveFamilyMemberByID(ctx context.Context, id int) error
+	CreateFamilyMember(ctx context.Context, req model.Family) error
 }
 
 type family struct {
@@ -39,7 +40,7 @@ func (f *family) GetFamilyMemberByID(ctx context.Context, id int) (model.Family,
 		deleted_at
 	`
 
-	ctx, cancel := context.WithTimeout(ctx, time.Second*3)
+	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
 
 	db := f.db.Table("members")
@@ -54,14 +55,16 @@ func (f *family) GetFamilyMemberByID(ctx context.Context, id int) (model.Family,
 }
 
 func (f *family) UpdateFamilyMemberByID(ctx context.Context, data model.Family) error {
-	ctx, cancel := context.WithTimeout(ctx, time.Second*3)
+	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
+	now := time.Now()
+	data.UpdatedAt = &now
 
 	return f.db.Table("members").Updates(data).WithContext(ctx).Error
 }
 
 func (f *family) RemoveFamilyMemberByID(ctx context.Context, id int) error {
-	ctx, cancel := context.WithTimeout(ctx, time.Second*3)
+	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
 	defer cancel()
 
 	now := time.Now()
@@ -72,4 +75,11 @@ func (f *family) RemoveFamilyMemberByID(ctx context.Context, id int) error {
 	}
 
 	return f.db.Table("members").Updates(data).WithContext(ctx).Error
+}
+
+func (f *family) CreateFamilyMember(ctx context.Context, data model.Family) error {
+	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
+	defer cancel()
+	data.UpdatedAt = nil
+	return f.db.Table("members").Create(&data).WithContext(ctx).Error
 }

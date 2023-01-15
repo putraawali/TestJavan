@@ -12,6 +12,7 @@ type FamilyUsecase interface {
 	GetFamilyMemberByID(ctx context.Context, id int) (model.FamilyAssets, error)
 	UpdateFamilyMemberByID(ctx context.Context, req model.FamilyRequest, id int) error
 	RemoveFamilyMemberByID(ctx context.Context, id int) error
+	CreateFamilyMember(ctx context.Context, req model.FamilyRequest) error
 }
 
 type family struct {
@@ -120,4 +121,11 @@ func (f *family) UpdateFamilyMemberByID(ctx context.Context, req model.FamilyReq
 
 func (f *family) RemoveFamilyMemberByID(ctx context.Context, id int) error {
 	return f.repo.Family.RemoveFamilyMemberByID(ctx, id)
+}
+
+func (f *family) CreateFamilyMember(ctx context.Context, req model.FamilyRequest) error {
+	return f.repo.Family.CreateFamilyMember(ctx, model.Family{
+		MemberName: req.MemberName,
+		Gender:     req.Gender,
+	})
 }
