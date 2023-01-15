@@ -9,6 +9,7 @@ import (
 	"testjavan/helpers/constants"
 	"testjavan/pkg"
 	"testjavan/repositories"
+	"testjavan/tcp"
 	usecase "testjavan/usecases"
 	"time"
 
@@ -58,7 +59,9 @@ func main() {
 	usecase := usecase.NewUsecase(repo)
 	controllers.NewController(e, usecase)
 
-	fmt.Printf("[%s] Service running on port: %s\n", time.Now().Format(constants.TimeFormat), os.Getenv("APP_PORT"))
+	go tcp.TCP()
+
+	fmt.Printf("[%s] HTTP Service running on port: %s\n", time.Now().Format(constants.TimeFormat), os.Getenv("APP_PORT"))
 	e.HideBanner = true
 	e.HidePort = true
 

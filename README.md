@@ -5,10 +5,10 @@
 ```
 - Create .env file and copy env key from .env.example then fill it with your own value
 - run go get ./...
-- run go run main.go
+- run go run *.go
 ```
 
-# API Documentation
+# API HTTP Documentation
 
 Header
 
@@ -20,7 +20,23 @@ Header
 
 ## Get Family By ID
 
-### GET /family/member/:id
+### TCP Message args
+
+### TCP Message args
+
+Payload (JSON String)
+
+```
+{
+    "method": "GET",
+    "category": "family",
+    "args": {
+        "member_id": 1
+    }
+}
+```
+
+### HTTP GET /family/member/:id
 
 Result
 
