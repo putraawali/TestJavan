@@ -8,6 +8,8 @@ import (
 
 type Controller interface {
 	GetFamilyMemberByID(c echo.Context) error
+	UpdateFamilyMemberByID(c echo.Context) error
+	RemoveFamilyMemberByID(c echo.Context) error
 }
 
 type controllerImpl struct {
@@ -24,4 +26,6 @@ func familyRouter(e *echo.Echo, controller *controllerImpl) {
 	g := e.Group("/family")
 
 	g.GET("/member/:id", controller.GetFamilyMemberByID)
+	g.PUT("/member/:id", controller.UpdateFamilyMemberByID)
+	g.DELETE("/member/:id", controller.RemoveFamilyMemberByID)
 }

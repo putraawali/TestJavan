@@ -2,4 +2,10 @@ package helpers
 
 import "flag"
 
-var ProjectFolder = flag.String("folder", "./", "absolute path of project folder")
+type key string
+
+var (
+	ProjectFolder        = flag.String("folder", "./", "absolute path of project folder")
+	RequestIDKey  key    = "X-Request-ID"
+	RequestID     string = "X-Request-ID"
+)

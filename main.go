@@ -20,7 +20,7 @@ import (
 
 func init() {
 	if err := gotenv.Load(*helpers.ProjectFolder + ".env"); err == nil {
-		fmt.Println("Env loaded")
+		fmt.Printf("[%s] Env loaded\n", time.Now().Format(constants.TimeFormat))
 	}
 
 	logrus.SetFormatter(&logrus.JSONFormatter{

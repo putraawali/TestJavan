@@ -1,8 +1,9 @@
 package model
 
 type Return struct {
-	Error Error       `json:"error"`
-	Data  interface{} `json:"data"`
+	Data   interface{} `json:"data"`
+	Error  Error       `json:"error"`
+	Status string      `json:"status"`
 }
 
 type Error struct {

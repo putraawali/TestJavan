@@ -10,8 +10,9 @@ import (
 
 var (
 	ErrMethodNotAllowed = errors.New("error: method is not allowed")
-	ErrContentType      = errors.New("error: invalid Content-Type")
+	ErrContentType      = errors.New("error: Content-Type must be application/json")
 	ErrMissingParameter = errors.New("error: missing parameter")
+	ErrInvalidParameter = errors.New("error: invalid parameter")
 	ErrRecordNotfound   = errors.New("error: data not found")
 )
 
@@ -19,6 +20,7 @@ var ErrHttpStatusMap = map[string]int{
 	ErrMethodNotAllowed.Error(): http.StatusMethodNotAllowed,
 	ErrContentType.Error():      http.StatusBadRequest,
 	ErrMissingParameter.Error(): http.StatusBadRequest,
+	ErrInvalidParameter.Error(): http.StatusBadRequest,
 	ErrRecordNotfound.Error():   http.StatusNotFound,
 }
 
@@ -39,7 +41,8 @@ func Wrap(c echo.Context, err error) error {
 	data := map[string]interface{}{}
 
 	return c.JSON(code, model.Return{
-		Error: errView,
-		Data:  data,
+		Error:  errView,
+		Data:   data,
+		Status: "error",
 	})
 }

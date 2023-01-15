@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"testjavan/helpers/constants"
 	"time"
 
 	"gorm.io/driver/postgres"
@@ -51,6 +52,6 @@ func ConnectDB() (*gorm.DB, error) {
 		}
 	}
 
-	fmt.Println("Success connect to database")
+	fmt.Printf("[%s] Success connect to database\n", time.Now().Format(constants.TimeFormat))
 	return connection, nil
 }
